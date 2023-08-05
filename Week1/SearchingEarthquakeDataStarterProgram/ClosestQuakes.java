@@ -1,9 +1,6 @@
-
-/**
- * Find N-closest quakes
- * 
- * @author Duke Software/Learn to Program
- * @version 1.0, November 2015
+/** 
+ * @author (https://github.com/danielvillam) 
+ * @version (August 5, 2023)
  */
 
 import java.util.*;
