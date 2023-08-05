@@ -34,6 +34,18 @@ public class EarthQuakeClient {
         }
         return answer;
     }
+    
+    public ArrayList<QuakeEntry> filterByDepth (ArrayList<QuakeEntry> quakeData,
+    double minDepth ,
+    double maxDepth){
+        ArrayList<QuakeEntry> answer = new ArrayList<QuakeEntry>();
+        for (QuakeEntry qe : quakeData) {
+            if(qe.getDepth() > minDepth && qe.getDepth() < maxDepth){
+                answer.add(qe);
+            }
+        }
+        return answer;
+    }
 
     public void dumpCSV(ArrayList<QuakeEntry> list){
         System.out.println("Latitude,Longitude,Magnitude,Info");
@@ -79,6 +91,19 @@ public class EarthQuakeClient {
         ArrayList<QuakeEntry> listFilter = filterByDistanceFrom(list,1000000,city);
         for (QuakeEntry qe : listFilter) {
            System.out.println(qe.getLocation().distanceTo(city)/1000.0 + " "+ qe.getInfo());
+        }
+        System.out.println("Found " + listFilter.size() + " quakes that match that criteria");
+    }
+    
+    public void quakesOfDepth (){
+        EarthQuakeParser parser = new EarthQuakeParser();
+        String source = "data/nov20quakedatasmall.atom";
+        ArrayList<QuakeEntry> list  = parser.read(source);
+        System.out.println("read data for "+list.size()+" quakes");
+        System.out.println("Find quakes with depth between -10000.0 and -5000.0");
+        ArrayList<QuakeEntry> listFilter = filterByDepth(list,-10000.0,-5000.0);
+        for (QuakeEntry qe : listFilter) {
+           System.out.println(qe);
         }
         System.out.println("Found " + listFilter.size() + " quakes that match that criteria");
     }
