@@ -1,7 +1,9 @@
 #BlueJ class context
 comment0.target=ClosestQuakes
-comment1.params=quakeData\ current\ howMany
-comment1.target=java.util.ArrayList\ getClosest(java.util.ArrayList,\ Location,\ int)
-comment2.params=
-comment2.target=void\ findClosestQuakes()
-numComments=3
+comment1.params=list\ from
+comment1.target=QuakeEntry\ findTheClosestQuake(java.util.ArrayList,\ Location)
+comment2.params=quakeData\ current\ howMany
+comment2.target=java.util.ArrayList\ getClosest(java.util.ArrayList,\ Location,\ int)
+comment3.params=
+comment3.target=void\ findClosestQuakes()
+numComments=4
