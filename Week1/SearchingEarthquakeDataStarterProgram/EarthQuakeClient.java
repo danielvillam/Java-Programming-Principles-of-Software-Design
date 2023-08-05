@@ -46,6 +46,28 @@ public class EarthQuakeClient {
         }
         return answer;
     }
+    
+    public ArrayList<QuakeEntry> filterByPhrase (ArrayList<QuakeEntry> quakeData,
+    String where,
+    String phrase){
+        ArrayList<QuakeEntry> answer = new ArrayList<QuakeEntry>();
+        for (QuakeEntry qe : quakeData) {
+            if(where.equals("start")){
+                if(qe.getInfo().startsWith(phrase)){
+                    answer.add(qe);
+                }
+            }else if(where.equals("end")){
+                if(qe.getInfo().endsWith(phrase)){
+                    answer.add(qe);
+                }
+            }else if(where.equals("any")){
+                if(qe.getInfo().indexOf(phrase) != -1){
+                    answer.add(qe);
+                }
+            }
+        }
+        return answer;
+    }
 
     public void dumpCSV(ArrayList<QuakeEntry> list){
         System.out.println("Latitude,Longitude,Magnitude,Info");
@@ -106,6 +128,32 @@ public class EarthQuakeClient {
            System.out.println(qe);
         }
         System.out.println("Found " + listFilter.size() + " quakes that match that criteria");
+    }
+    
+    public void quakesByPhrase (){
+        EarthQuakeParser parser = new EarthQuakeParser();
+        String source = "data/nov20quakedatasmall.atom";
+        ArrayList<QuakeEntry> list  = parser.read(source);
+        System.out.println("read data for "+list.size()+" quakes");
+        
+        ArrayList<QuakeEntry> listFilter = filterByPhrase(list,"end","California");
+        for (QuakeEntry qe : listFilter) {
+           System.out.println(qe);
+        }
+        System.out.println("Found " + listFilter.size() + " quakes that match California at end");
+        System.out.println("---------------------------------------------");
+        listFilter = filterByPhrase(list,"any","Can");
+        for (QuakeEntry qe : listFilter) {
+           System.out.println(qe);
+        }
+        System.out.println("Found " + listFilter.size() + " quakes that match Can at any");
+        System.out.println("---------------------------------------------");
+        listFilter = filterByPhrase(list,"start","Explosion");
+        for (QuakeEntry qe : listFilter) {
+           System.out.println(qe);
+        }
+        System.out.println("Found " + listFilter.size() + " quakes that match Explosion at start");
+        
     }
 
     public void createCSV(){
