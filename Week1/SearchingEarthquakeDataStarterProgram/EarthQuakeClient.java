@@ -119,11 +119,11 @@ public class EarthQuakeClient {
     
     public void quakesOfDepth (){
         EarthQuakeParser parser = new EarthQuakeParser();
-        String source = "data/nov20quakedatasmall.atom";
+        String source = "data/nov20quakedata.atom";
         ArrayList<QuakeEntry> list  = parser.read(source);
         System.out.println("read data for "+list.size()+" quakes");
-        System.out.println("Find quakes with depth between -10000.0 and -5000.0");
-        ArrayList<QuakeEntry> listFilter = filterByDepth(list,-10000.0,-5000.0);
+        System.out.println("Find quakes with depth between -8000.0 and -5000.0");
+        ArrayList<QuakeEntry> listFilter = filterByDepth(list,-8000.0,-5000.0);
         for (QuakeEntry qe : listFilter) {
            System.out.println(qe);
         }
@@ -132,28 +132,49 @@ public class EarthQuakeClient {
     
     public void quakesByPhrase (){
         EarthQuakeParser parser = new EarthQuakeParser();
-        String source = "data/nov20quakedatasmall.atom";
+        String source = "data/nov20quakedata.atom";
         ArrayList<QuakeEntry> list  = parser.read(source);
         System.out.println("read data for "+list.size()+" quakes");
         
-        ArrayList<QuakeEntry> listFilter = filterByPhrase(list,"end","California");
-        for (QuakeEntry qe : listFilter) {
-           System.out.println(qe);
-        }
-        System.out.println("Found " + listFilter.size() + " quakes that match California at end");
+        //ArrayList<QuakeEntry> listFilter = filterByPhrase(list,"end","California");
+        //for (QuakeEntry qe : listFilter) {
+        //   System.out.println(qe);
+        //}
+        //System.out.println("Found " + listFilter.size() + " quakes that match California at end");
+        //System.out.println("---------------------------------------------");
+        //listFilter = filterByPhrase(list,"any","Can");
+        //for (QuakeEntry qe : listFilter) {
+        //   System.out.println(qe);
+        //}
+        //System.out.println("Found " + listFilter.size() + " quakes that match Can at any");
+        //System.out.println("---------------------------------------------");
+        //listFilter = filterByPhrase(list,"start","Explosion");
+        //for (QuakeEntry qe : listFilter) {
+        //   System.out.println(qe);
+        //}
+        //System.out.println("Found " + listFilter.size() + " quakes that match Explosion at start");
+        
+        //Quiz
         System.out.println("---------------------------------------------");
-        listFilter = filterByPhrase(list,"any","Can");
-        for (QuakeEntry qe : listFilter) {
-           System.out.println(qe);
-        }
-        System.out.println("Found " + listFilter.size() + " quakes that match Can at any");
-        System.out.println("---------------------------------------------");
-        listFilter = filterByPhrase(list,"start","Explosion");
+        ArrayList<QuakeEntry> listFilter = filterByPhrase(list,"start","Explosion");
         for (QuakeEntry qe : listFilter) {
            System.out.println(qe);
         }
         System.out.println("Found " + listFilter.size() + " quakes that match Explosion at start");
         
+        System.out.println("---------------------------------------------");
+        listFilter = filterByPhrase(list,"end","California");
+        for (QuakeEntry qe : listFilter) {
+           System.out.println(qe);
+        }
+        System.out.println("Found " + listFilter.size() + " quakes that match California at end");
+    
+        System.out.println("---------------------------------------------");
+        listFilter = filterByPhrase(list,"any","Creek");
+        for (QuakeEntry qe : listFilter) {
+           System.out.println(qe);
+        }
+        System.out.println("Found " + listFilter.size() + " quakes that match Creek at any");
     }
 
     public void createCSV(){

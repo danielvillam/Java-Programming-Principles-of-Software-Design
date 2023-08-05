@@ -7,7 +7,7 @@ import java.util.*;
 public class LargestQuakes {
     public void findLargestQuakes (){
         EarthQuakeParser parser = new EarthQuakeParser();
-        String source = "data/nov20quakedatasmall.atom";
+        String source = "data/nov20quakedata.atom";
         ArrayList<QuakeEntry> list  = parser.read(source);
         System.out.println("read data for "+list.size()+" quakes");
         int idxLargest = indexOfLargest(list);
