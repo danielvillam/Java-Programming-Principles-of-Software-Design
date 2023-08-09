@@ -21,6 +21,48 @@ public class EarthQuakeClient2 {
         
         return answer;
     } 
+    
+    public void quakesOfDepth (){
+        EarthQuakeParser parser = new EarthQuakeParser(); 
+        String source = "data/nov20quakedata.atom";
+        ArrayList<QuakeEntry> list  = parser.read(source);         
+        System.out.println("read data for "+list.size()+" quakes");
+        
+        Filter f = new DepthFilter(-3999.0,-2001.0,"Depth");
+        ArrayList<QuakeEntry> listFilter = filter(list, f);
+        for (QuakeEntry qe: listFilter) { 
+            System.out.println(qe);
+        }
+        System.out.println("Found "+ listFilter.size() + " quakes that match that criteria");
+    }
+    
+    public void quakesByPhrase (){
+        EarthQuakeParser parser = new EarthQuakeParser(); 
+        String source = "data/nov20quakedata.atom";
+        ArrayList<QuakeEntry> list  = parser.read(source);         
+        System.out.println("read data for "+list.size()+" quakes");
+        
+        Filter f = new PhraseFilter("any","Can","Phrase");
+        ArrayList<QuakeEntry> listFilter = filter(list, f);
+        for (QuakeEntry qe: listFilter) { 
+            System.out.println(qe);
+        }
+        System.out.println("Found "+ listFilter.size() + " quakes that match that criteria");
+    }
+    
+    public void findLargestQuakes (){
+        EarthQuakeParser parser = new EarthQuakeParser(); 
+        String source = "data/nov20quakedata.atom";
+        ArrayList<QuakeEntry> list  = parser.read(source);         
+        System.out.println("read data for "+list.size()+" quakes");
+        
+        Filter f = new PhraseFilter("any","Can","Phrase");
+        ArrayList<QuakeEntry> listFilter = filter(list, f);
+        for (QuakeEntry qe: listFilter) { 
+            System.out.println(qe);
+        }
+        System.out.println("Found "+ listFilter.size() + " quakes that match that criteria");
+    }
 
     public void quakesWithFilter() { 
         EarthQuakeParser parser = new EarthQuakeParser(); 
@@ -55,6 +97,62 @@ public class EarthQuakeClient2 {
         //    System.out.println(qe);
         //}
         //System.out.println("Found "+ listFilter.size() + " quakes that match that criteria");
+    }
+    
+    public void testQuiz (){
+        EarthQuakeParser parser = new EarthQuakeParser(); 
+        String source = "data/nov20quakedata.atom";
+        ArrayList<QuakeEntry> list  = parser.read(source);         
+        System.out.println("read data for "+list.size()+" quakes");
+        
+        // This location is Denver, Colorado
+        //Location city = new Location(39.7392, -104.9903);
+        //Filter f = new DistanceFilter(city, 1000000, "Distance");
+        //ArrayList<QuakeEntry> listFilter = filter(list, f);
+        //f = new PhraseFilter("end","a","Phrase");
+        //listFilter = filter(listFilter, f);
+        //for (QuakeEntry qe: listFilter) { 
+        //    System.out.println(qe);
+        //}
+        //System.out.println("Found "+ listFilter.size() + " quakes that match that criteria");
+        
+        //Filter f = new MagnitudeFilter(3.5,4.5,"Magnitude");
+        //ArrayList<QuakeEntry> listFilter = filter(list, f);
+        //f = new DepthFilter(-55000.0,-20000.0,"Depth");
+        //listFilter = filter(listFilter, f);
+        //for (QuakeEntry qe: listFilter) { 
+        //    System.out.println(qe);
+        //}
+        //System.out.println("Found "+ listFilter.size() + " quakes that match that criteria");
+        
+        //MatchAllFilter maf = new MatchAllFilter();
+        
+        //maf.addFilter(new MagnitudeFilter(1.0,4.0,"Magnitude"));
+        //maf.addFilter(new DepthFilter(-180000.0,-30000.0,"Depth"));
+        //maf.addFilter(new PhraseFilter("any","o","Phrase"));
+        
+        //ArrayList<QuakeEntry> listFilter = filter(list, maf);
+        //for (QuakeEntry qe: listFilter) { 
+        //    System.out.println(qe);
+        //}
+        //System.out.println("Found "+ listFilter.size() + " quakes that match that criteria");
+        //System.out.print("Filters used are: ");
+        //System.out.println(maf.getName());
+        
+        MatchAllFilter maf = new MatchAllFilter();
+        
+        // This location is Billund, Dinamarca
+        Location city = new Location(55.7308, 9.1153);
+        
+        maf.addFilter(new MagnitudeFilter(0.0,5.0,"Magnitude"));
+        maf.addFilter(new DistanceFilter(city, 3000000,"Distance"));
+        maf.addFilter(new PhraseFilter("any","e","Phrase"));
+        
+        ArrayList<QuakeEntry> listFilter = filter(list, maf);
+        for (QuakeEntry qe: listFilter) { 
+            System.out.println(qe);
+        }
+        System.out.println("Found "+ listFilter.size() + " quakes that match that criteria");
     }
     
     public void testMatchAllFilter (){
