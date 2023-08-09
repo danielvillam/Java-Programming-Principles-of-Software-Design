@@ -42,11 +42,31 @@ public class QuakeSortInPlace {
        
         System.out.println("read data for "+list.size()+" quakes");    
         //sortByMagnitude(list);
-        sortByLargestDepth(list);
+        //sortByLargestDepth(list);
+        sortByMagnitudeWithBubbleSort(list);
         for (QuakeEntry qe: list) { 
             System.out.println(qe);
         } 
-        
+    }
+    
+    public void testSort2 (){
+        EarthQuakeParser parser = new EarthQuakeParser(); 
+        //String source = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.atom";
+        String source = "data/earthquakeDataSampleSix2.atom";
+        //String source = "data/nov20quakedata.atom";
+        ArrayList<QuakeEntry> list  = parser.read(source);  
+       
+        System.out.println("read data for "+list.size()+" quakes");
+        for (QuakeEntry qe: list) { 
+            System.out.println(qe);
+        }
+        //sortByMagnitude(list);
+        //sortByLargestDepth(list);
+        sortByMagnitudeWithBubbleSort(list);
+        System.out.println("EarthQuakes in sorted order:");
+        for (QuakeEntry qe: list) { 
+            System.out.println(qe);
+        }
     }
     
     public void createCSV() {
@@ -81,12 +101,32 @@ public class QuakeSortInPlace {
     }
     
     public void sortByLargestDepth (ArrayList<QuakeEntry> in){
-        for (int i=0; i< in.size(); i++) {
+        for(int i=0; i< in.size(); i++) {
             int largIdx = getLargestDepth(in,i);
             QuakeEntry qi = in.get(i);
             QuakeEntry qLarg = in.get(largIdx);
             in.set(i,qLarg);
             in.set(largIdx,qi);
+        }
+    }
+    
+    public void onePassBubbleSort (ArrayList<QuakeEntry> quakeData, int numSorted){
+        for(int i=0; i< quakeData.size()-1; i++) {
+            if(quakeData.get(i).getMagnitude() > quakeData.get(i+1).getMagnitude()){
+                QuakeEntry qi = quakeData.get(i);
+                quakeData.set(i,quakeData.get(i+1));
+                quakeData.set(i+1,qi);
+            }
+        }
+    }
+    
+    public void sortByMagnitudeWithBubbleSort (ArrayList<QuakeEntry> in){
+        for(int i=0; i < in.size()-1; i++) {
+            onePassBubbleSort(in,i);
+            System.out.println("Printing Quakes after pass "+i);
+            for (QuakeEntry qe: in) { 
+                System.out.println(qe);
+            }
         }
     }
 }
