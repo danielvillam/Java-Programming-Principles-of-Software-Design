@@ -62,7 +62,9 @@ public class QuakeSortInPlace {
         }
         //sortByMagnitude(list);
         //sortByLargestDepth(list);
-        sortByMagnitudeWithBubbleSort(list);
+        //sortByMagnitudeWithBubbleSort(list);
+        //sortByMagnitudeWithBubbleSortWithCheck(list);
+        sortByMagnitudeWithCheck(list);
         System.out.println("EarthQuakes in sorted order:");
         for (QuakeEntry qe: list) { 
             System.out.println(qe);
@@ -127,6 +129,36 @@ public class QuakeSortInPlace {
             for (QuakeEntry qe: in) { 
                 System.out.println(qe);
             }
+        }
+    }
+    
+    public boolean checkInSortedOrder (ArrayList<QuakeEntry> quakes){
+        for(int i=0; i < quakes.size()-1; i++) {
+            if(quakes.get(i).getMagnitude() > quakes.get(i+1).getMagnitude()){
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public void sortByMagnitudeWithBubbleSortWithCheck (ArrayList<QuakeEntry> in){
+        for(int i=0; i < in.size()-1; i++) {
+            if(checkInSortedOrder(in)){
+                System.out.println("\nIt took " + i + " passes to sort!\n"); 
+                break; 
+            }else{
+                onePassBubbleSort(in, i);
+            }
+        }
+    }
+    
+    public void sortByMagnitudeWithCheck (ArrayList<QuakeEntry> in){
+        for(int i=0; i<in.size(); i++){
+            if(checkInSortedOrder(in)){ 
+                System.out.println("\nIt took " + i + " passes to sort!\n"); 
+                break; 
+            }
+            sortByMagnitude(in);
         }
     }
 }
