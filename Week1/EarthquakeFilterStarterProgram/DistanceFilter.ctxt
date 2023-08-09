@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.target=DistanceFilter
+comment0.text=\ \r\n\ @author\ (https\://github.com/danielvillam)\ \r\n\ @version\ (August\ 8,\ 2023)\r\n
+comment1.params=loc\ max
+comment1.target=DistanceFilter(Location,\ double)
+comment2.params=qe
+comment2.target=boolean\ satisfies(QuakeEntry)
+numComments=3
