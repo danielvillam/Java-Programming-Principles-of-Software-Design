@@ -25,7 +25,7 @@ public class EarthQuakeClient2 {
     public void quakesWithFilter() { 
         EarthQuakeParser parser = new EarthQuakeParser(); 
         //String source = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.atom";
-        String source = "data/nov20quakedatasmall.atom";
+        String source = "data/nov20quakedata.atom";
         ArrayList<QuakeEntry> list  = parser.read(source);         
         System.out.println("read data for "+list.size()+" quakes");
 
@@ -36,23 +36,68 @@ public class EarthQuakeClient2 {
         //    System.out.println(qe);
         //}
         
-        //Filter f = new MagnitudeFilter(4.0,5.0);
-        //ArrayList<QuakeEntry> listFilter = filter(list, f);
-        //f = new DepthFilter(-35000.0,-12000.0);
-        //listFilter = filter(listFilter, f);
-        //for (QuakeEntry qe: listFilter) { 
-        //    System.out.println(qe);
-        //}
-        
-        // This location is Tokyo, Japan
-        Location city = new Location(35.42, 139.43);
-        Filter f = new DistanceFilter(city, 10000000);
+        Filter f = new MagnitudeFilter(4.0,5.0,"Magnitude");
         ArrayList<QuakeEntry> listFilter = filter(list, f);
-        f = new PhraseFilter("end","Japan");
+        f = new DepthFilter(-35000.0,-12000.0,"Depth");
         listFilter = filter(listFilter, f);
         for (QuakeEntry qe: listFilter) { 
             System.out.println(qe);
         }
+        System.out.println("Found "+ listFilter.size() + " quakes that match that criteria");
+        
+        // This location is Tokyo, Japan
+        //Location city = new Location(35.42, 139.43);
+        //Filter f = new DistanceFilter(city, 10000000, "Distance");
+        //ArrayList<QuakeEntry> listFilter = filter(list, f);
+        //f = new PhraseFilter("end","Japan","Phrase");
+        //listFilter = filter(listFilter, f);
+        //for (QuakeEntry qe: listFilter) { 
+        //    System.out.println(qe);
+        //}
+        //System.out.println("Found "+ listFilter.size() + " quakes that match that criteria");
+    }
+    
+    public void testMatchAllFilter (){
+        EarthQuakeParser parser = new EarthQuakeParser(); 
+        String source = "data/nov20quakedata.atom";
+        ArrayList<QuakeEntry> list  = parser.read(source);         
+        System.out.println("read data for "+list.size()+" quakes");
+        
+        MatchAllFilter maf = new MatchAllFilter();
+        
+        maf.addFilter(new MagnitudeFilter(0.0,2.0,"Magnitude"));
+        maf.addFilter(new DepthFilter(-100000.0,-10000.0,"Depth"));
+        maf.addFilter(new PhraseFilter("any","a","Phrase"));
+        
+        ArrayList<QuakeEntry> listFilter = filter(list, maf);
+        for (QuakeEntry qe: listFilter) { 
+            System.out.println(qe);
+        }
+        System.out.println("Found "+ listFilter.size() + " quakes that match that criteria");
+        System.out.print("Filters used are: ");
+        System.out.println(maf.getName());
+    }
+    
+    public void testMatchAllFilter2 (){
+        EarthQuakeParser parser = new EarthQuakeParser(); 
+        String source = "data/nov20quakedata.atom";
+        ArrayList<QuakeEntry> list  = parser.read(source);         
+        System.out.println("read data for "+list.size()+" quakes");
+        
+        MatchAllFilter maf = new MatchAllFilter();
+        
+        // This location is Tulsa, Oklahoma
+        Location city = new Location(36.1314,-95.9372);
+        
+        maf.addFilter(new MagnitudeFilter(0.0,3.0,"Magnitude"));
+        maf.addFilter(new DistanceFilter(city, 10000000,"Distance"));
+        maf.addFilter(new PhraseFilter("any","Ca","Phrase"));
+        
+        ArrayList<QuakeEntry> listFilter = filter(list, maf);
+        for (QuakeEntry qe: listFilter) { 
+            System.out.println(qe);
+        }
+        System.out.println("Found "+ listFilter.size() + " quakes that match that criteria");
     }
 
     public void createCSV() {

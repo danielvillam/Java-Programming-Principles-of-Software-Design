@@ -6,10 +6,12 @@
 public class PhraseFilter implements Filter{
     private String typeRequest ;
     private String phrase;
+    private String name;
     
-    public PhraseFilter (String where, String phrase){
+    public PhraseFilter (String where, String phrase, String name){
         typeRequest = where;
         this.phrase = phrase;
+        this.name = name;
     }
     
     public boolean satisfies(QuakeEntry qe) { 
@@ -27,5 +29,9 @@ public class PhraseFilter implements Filter{
                 }
             }
         return false;
+    }
+    
+    public String getName(){
+        return name;
     }
 }
