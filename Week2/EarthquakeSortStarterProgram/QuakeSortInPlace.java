@@ -65,10 +65,32 @@ public class QuakeSortInPlace {
         //sortByMagnitudeWithBubbleSort(list);
         //sortByMagnitudeWithBubbleSortWithCheck(list);
         sortByMagnitudeWithCheck(list);
-        System.out.println("EarthQuakes in sorted order:");
-        for (QuakeEntry qe: list) { 
-            System.out.println(qe);
-        }
+        //System.out.println("EarthQuakes in sorted order:");
+        //for (QuakeEntry qe: list) { 
+        //    System.out.println(qe);
+        //}
+    }
+    
+    public void testQuiz (){
+        EarthQuakeParser parser = new EarthQuakeParser(); 
+        //String source = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.atom";
+        String source = "data/earthQuakeDataDec6sample1.atom";
+        //String source = "data/nov20quakedata.atom";
+        ArrayList<QuakeEntry> list  = parser.read(source);  
+       
+        System.out.println("read data for "+list.size()+" quakes");
+        //for (QuakeEntry qe: list) { 
+        //    System.out.println(qe);
+        //}
+        //sortByMagnitude(list);
+        //sortByLargestDepth(list);
+        //sortByMagnitudeWithBubbleSort(list);
+        //sortByMagnitudeWithBubbleSortWithCheck(list);
+        sortByMagnitudeWithCheck(list);
+        //System.out.println("EarthQuakes in sorted order:");
+        //for (QuakeEntry qe: list) { 
+        //    System.out.println(qe);
+        //}
     }
     
     public void createCSV() {
@@ -103,7 +125,7 @@ public class QuakeSortInPlace {
     }
     
     public void sortByLargestDepth (ArrayList<QuakeEntry> in){
-        for(int i=0; i< in.size(); i++) {
+        for(int i=0; i < in.size(); i++) {
             int largIdx = getLargestDepth(in,i);
             QuakeEntry qi = in.get(i);
             QuakeEntry qLarg = in.get(largIdx);
@@ -153,12 +175,17 @@ public class QuakeSortInPlace {
     }
     
     public void sortByMagnitudeWithCheck (ArrayList<QuakeEntry> in){
-        for(int i=0; i<in.size(); i++){
+        for(int i=0; i < in.size(); i++){
             if(checkInSortedOrder(in)){ 
                 System.out.println("\nIt took " + i + " passes to sort!\n"); 
                 break; 
+            }else{
+              int minIdx = getSmallestMagnitude(in,i);
+              QuakeEntry qi = in.get(i);
+              QuakeEntry qmin = in.get(minIdx);
+              in.set(i,qmin);
+              in.set(minIdx,qi);  
             }
-            sortByMagnitude(in);
         }
     }
 }
