@@ -15,30 +15,33 @@ public class EfficientMarkovModel extends AbstractMarkovModel{
     }
     
     public void setTraining(String s){
-        myText = s;
+        myText = s.trim();
         markovMap = buildMap();
+        printHashMapInfo();
     }
     
     private HashMap<String,ArrayList<String>> buildMap() {
-        HashMap<String,ArrayList<String>> mappedChars = new HashMap<String,ArrayList<String>>();
-        int idx = 0;
-        while (idx < myText.length()-(n-1)) {
-            String key = myText.substring(idx,idx+n);
-            if (!mappedChars.containsKey(key) && idx + n < myText.length()) {
-                mappedChars.put(key,new ArrayList<String>(Arrays.asList(
-                          myText.substring(idx+key.length(),idx+key.length()+1))));
+        HashMap<String,ArrayList<String>> followsMap = new HashMap<String, ArrayList<String>>();;
+        for (int i = 0; i <= myText.length() - n; i++) {
+            String key = myText.substring(i, i + n);
+            
+            if (i == myText.length() - n) {
+                followsMap.put(key, new ArrayList<String>());
+                continue;
             }
-            else if (mappedChars.containsKey(key) && idx + n < myText.length()){
-                ArrayList<String> currentValues = mappedChars.get(key);
-                currentValues.add(myText.substring(idx+key.length(),idx+key.length()+1));
-                mappedChars.replace(key,currentValues);
+            
+            ArrayList<String> follows;
+            
+            if (!followsMap.containsKey(key)) {
+                follows = new ArrayList<String>();
+            } else {
+                follows = followsMap.get(key);
             }
-            else if (idx + n == myText.length()){
-                mappedChars.put(key, new ArrayList<String>());
-            }
-            idx++;
-        }     
-        return mappedChars;
+            
+            follows.add(myText.substring(i + key.length(), i + key.length() + 1));
+            followsMap.put(key, follows);
+        }
+        return followsMap;
     }
     
     public ArrayList<String> getFollows(String key) {
@@ -46,7 +49,6 @@ public class EfficientMarkovModel extends AbstractMarkovModel{
     }
 	
     public String getRandomText(int numChars){
-	//printHashMapInfo();
         if (myText == null){
 	    return "";
 	}
@@ -55,7 +57,7 @@ public class EfficientMarkovModel extends AbstractMarkovModel{
 	String key = myText.substring(index, index + n);
 	sb.append(key);
 	
-	for(int k=0; k < numChars-4; k++){
+	for(int k=0; k < numChars-n; k++){
 	    ArrayList<String> follows = getFollows(key);
 	    if(follows.size() == 0){
 	        break;

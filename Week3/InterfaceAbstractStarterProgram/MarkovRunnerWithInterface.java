@@ -58,6 +58,17 @@ public class MarkovRunnerWithInterface {
         EfficientMarkovModel markovEficcient = new EfficientMarkovModel(2);
         runModel(markovEficcient, st, size, seed);
     }
+    
+    public void testQuiz1 (){
+        FileResource fr = new FileResource();
+        String st = fr.asString();
+        st = st.replace('\n', ' ');
+        int size = 500;
+        int seed = 615;
+        
+        EfficientMarkovModel markovEficcient = new EfficientMarkovModel(5);
+        runModel(markovEficcient, st, size, seed);
+    }
 
     private void printOut(String s){
         String[] words = s.split("\\s+");
