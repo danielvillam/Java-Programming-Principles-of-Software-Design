@@ -35,6 +35,29 @@ public class MarkovRunnerWithInterface {
         runModel(mFour, st, size, 365);
 
     }
+    
+    public void testHashMap (){
+        EfficientMarkovModel markovEficcient = new EfficientMarkovModel(2);
+        String text = "yes-this-is-a-thin-pretty-pink-thistle";
+        int size = 50;
+        int seed = 42;
+        
+        runModel(markovEficcient, text, size, seed);
+    }
+    
+    public void compareMethods (){
+        FileResource fr = new FileResource();
+        String st = fr.asString();
+        st = st.replace('\n', ' ');
+        int size = 1000;
+        int seed = 42;
+        
+        MarkovModel markov = new MarkovModel(2);
+        runModel(markov, st, size, seed);
+        
+        EfficientMarkovModel markovEficcient = new EfficientMarkovModel(2);
+        runModel(markovEficcient, st, size, seed);
+    }
 
     private void printOut(String s){
         String[] words = s.split("\\s+");
