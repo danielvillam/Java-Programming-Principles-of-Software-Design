@@ -5,21 +5,7 @@
 
 import java.util.Random;
 
-public class MarkovZero implements IMarkovModel{
-    private String myText;
-    private Random myRandom;
-
-    public MarkovZero() {
-        myRandom = new Random();
-    }
-    
-    public void setRandom(int seed){
-        myRandom = new Random(seed);
-    }
-    
-    public void setTraining(String s){
-        myText = s.trim();
-    }
+public class MarkovZero extends AbstractMarkovModel{
     
     public String getRandomText(int numChars){
         if (myText == null){
@@ -32,5 +18,9 @@ public class MarkovZero implements IMarkovModel{
         }
         
         return sb.toString();
+    }
+    
+    public String toString(){
+        return "MarkovModel of order 0";
     }
 }
