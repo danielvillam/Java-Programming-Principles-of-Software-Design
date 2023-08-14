@@ -6,7 +6,7 @@
 import edu.duke.*;
 
 public class MarkovRunner {
-    public void runMarkovZero() {
+    public void runMarkovZero () {
         FileResource fr = new FileResource();
         String st = fr.asString();
         st = st.replace('\n', ' ');
@@ -18,7 +18,7 @@ public class MarkovRunner {
         }
     }
     
-    public void runMarkovOne() {
+    public void runMarkovOne () {
         FileResource fr = new FileResource();
         String st = fr.asString();
         st = st.replace('\n', ' ');
@@ -31,7 +31,33 @@ public class MarkovRunner {
         }
     }
     
-    private void printOut(String s){
+    public void runMarkovFour () {
+        FileResource fr = new FileResource();
+        String st = fr.asString();
+        st = st.replace('\n', ' ');
+        MarkovFour markov = new MarkovFour();
+        markov.setTraining(st);
+        for(int k=0; k < 3; k++){
+            markov.setRandom(25);
+            String text = markov.getRandomText(500);
+            printOut(text);
+        }
+    }
+    
+    public void runMarkovModel () {
+        FileResource fr = new FileResource();
+        String st = fr.asString();
+        st = st.replace('\n', ' ');
+        MarkovModel markov = new MarkovModel(6);
+        markov.setTraining(st);
+        for(int k=0; k < 3; k++){
+            markov.setRandom(38);
+            String text = markov.getRandomText(500);
+            printOut(text);
+        }
+    }
+    
+    private void printOut (String s){
         String[] words = s.split("\\s+");
         int psize = 0;
         System.out.println("----------------------------------");
